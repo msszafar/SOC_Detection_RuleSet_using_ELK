@@ -1,10 +1,73 @@
 # Fortigate firewall logs are being ingested in Elasticsearch SIEM using filebeat. Fortigate --> Logstash --> Filebeat_Sending_Logs_to_Elastic
 # The query of each elasticsearch rules (Custom query rules using KQL, threshold rules, correlation rules using EQL) is going to be shared here
 
-Usecase 1: Alert when more than 60 VPN users (SSL VPN) establish successful tunnel with Fortigate FW in the last 24 hours?
-
-Context of this usecase: You have to first check the count of VPN user (SSL VPN) that establish VPN with your fortigate firewall within the period of last 24 hours. If you see vpn users count = 10 then it is normal for your environment so your abnormal or threshold count should be like 12 or 15
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usecase 1: Create an alert when more than 60 VPN users (SSL VPN) establish successful tunnel with Fortigate FW in the last 24 hours.
+Context: You have to first check the count of VPN user (SSL VPN) that establish VPN with your fortigate firewall within the period of last 24 hours. If you see vpn users count = 10 then it is normal for your environment so your abnormal or threshold count should be like 12 or 15
 
 Elasticsearch Rule Type: Threshold Rule
-Elasticsearch Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established" 
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established" 
 Threshold Field: source.user.name >= 60
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usecase 2: Create an alert when a new user account establish a VPN tunnel
+Context: First you have to have a list of vpn users (SSL VPN) that establish VPN tunnel in the last 24 hours. For example, the users are A, B, C, D, N. 
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established" and not source.user.name : ("A" or "B" or "C" or "D" or "N")
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase 3: Create an alert when a user establish vpn (SSL VPN) from that country which was never seen before in last 90 days logs
+Context: Make a list of country names from where vpn (SSL VPN) user establish successful tunnel. For example "China, Russia, US, Pakistan" are legitimate regions for your fortigate. 
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established" and not destination.geo.country_name : ("China" or "Russia" or "US" or "Pakistan")
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase 4: Create an alert when the number of login attempts of vpn tunnel exceeds the threshold limit
+Context: Make a list of threshold limit against each vpn user that's your normal baseline. Create a rule 
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established"
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase : Create an alert when 
+Context:  
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established"
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase : Create an alert when 
+Context:  
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established"
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase : Create an alert when 
+Context:  
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established"
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase : Create an alert when 
+Context:  
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established"
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase : Create an alert when 
+Context:  
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established"
