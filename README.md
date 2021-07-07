@@ -1,4 +1,4 @@
-# SOC-using-Elasticsearch-ELK
+# SOC Detection RuleSet using ELK
 SOC Usecases / rules for elasticsearch
 Custom Usecases of SOC against each datasource (i.e firewall, domain controller, email, proxy, WAF, web servers, database server) has been provided in the form of elasticserach ruleset. 
 
