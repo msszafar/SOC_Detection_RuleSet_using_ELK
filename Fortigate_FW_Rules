@@ -26,48 +26,19 @@ Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn"
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Usercase 4: Create an alert when the number of login attempts of vpn tunnel exceeds the threshold limit
-Context: Make a list of threshold limit against each vpn user that's your normal baseline. Create a rule 
+Usercase 4: Create an alert when the number of login attempts of vpn tunnel exceeds to the defined threshold limit
+Context: Make a list of threshold limit against each vpn user that's your normal baseline. Write a rule to detect abnormal / suspicoius login behavior. For example, normally a vpn user "A" was establishing vpn tunnel 5 times in 24 hours period of time but if the user "A" attempts more than 20 times in this behavior is not normal. You mush have an alert on that.      
+
+Elasticsearch Rule Type: Threshold
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established" and source.user.name: "A"
+Threshold field: source.user.name >= 20
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase 5: Create an alert when a vpn user (SSL VPN) establish a vpn tunnel with a new public IP that he/she had never used before in last 90 days of logs. 
+Context: Make a list first that should map vpn user name to it's public IP. For example, in last 90 days logs of fortigate firewall, a vpn user "A" was comming with two public IP(s) "1.1.1.1" & "2.2.2.2" but now he is making vpn connection with new public IP "3.3.3.3". This is anomaly why?
 
 Elasticsearch Rule Type: Custom Query
-Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established"
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established" and not (source.user.name : "A" and (destination.ip : "1.1.1.1" or destination.ip : "2.2.2.2" or destination.ip : "3.3.3.3"))
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Usercase : Create an alert when 
-Context:  
-
-Elasticsearch Rule Type: Custom Query
-Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established"
-
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Usercase : Create an alert when 
-Context:  
-
-Elasticsearch Rule Type: Custom Query
-Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established"
-
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Usercase : Create an alert when 
-Context:  
-
-Elasticsearch Rule Type: Custom Query
-Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established"
-
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Usercase : Create an alert when 
-Context:  
-
-Elasticsearch Rule Type: Custom Query
-Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established"
-
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Usercase : Create an alert when 
-Context:  
-
-Elasticsearch Rule Type: Custom Query
-Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established"
