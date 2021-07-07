@@ -1,0 +1,3 @@
+# Fortigate firewall logs are being ingested in Elasticsearch SIEM using filebeat. Fortigate --> Logstash --> Filebeat_Sending_Logs_to_Elastic
+# The query of each elasticsearch rules (Custom query rules using KQL, threshold rules, correlation rules using EQL) is going to be shared here
+
