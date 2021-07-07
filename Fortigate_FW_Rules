@@ -1,3 +1,10 @@
 # Fortigate firewall logs are being ingested in Elasticsearch SIEM using filebeat. Fortigate --> Logstash --> Filebeat_Sending_Logs_to_Elastic
 # The query of each elasticsearch rules (Custom query rules using KQL, threshold rules, correlation rules using EQL) is going to be shared here
 
+Usecase 1: Alert when more than 60 VPN users (SSL VPN) establish successful tunnel with Fortigate FW in the last 24 hours?
+Context of this usecase: You have to first check the count of VPN user (SSL VPN) that establish VPN with your fortigate firewall within the period of last 24 hours. 
+If you see vpn users count = 10 then it is normal for your environment so your abnormal or threshold count should be like 12 or 15
+
+Elasticsearch Rule Type: Threshold Rule
+Elasticsearch Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established" 
+Threshold Field: source.user.name >= 60
