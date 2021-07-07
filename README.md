@@ -2,4 +2,4 @@
 SOC Usecases / rules for elasticsearch
 Custom Usecases of SOC against each datasource (i.e firewall, domain controller, email, proxy, WAF, web servers, database server) has been provided in the form of elasticserach ruleset. 
 
-Note: Please read the comment section of ruleset first before deploying the rule in your environment. [REASON: Field name being used in my ruleset can be change from your environment] 
+Note: Please read the context of the rule first, it will explain you how to modify the rule query according to your business need. Also see the rule type before writing the rule in kibana. Threhold rule, KQL and ELQ are the three categories of rules  
