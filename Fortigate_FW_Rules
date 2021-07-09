@@ -33,6 +33,7 @@ Elasticsearch Rule Type: Threshold
 Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn" and rule.description : "SSL VPN tunnel up" and fortinet.firewall.reason : "tunnel established" and source.user.name: "A"
 Threshold field: source.user.name >= 20
 
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Usercase 5: Create an alert when a vpn user (SSL VPN) establish a vpn tunnel with a new public IP that he/she had never used before in last 90 days of logs. 
 Context: Make a list first that should map vpn user name to it's public IP. For example, in last 90 days logs of fortigate firewall, a vpn user "A" was comming with two public IP(s) "1.1.1.1" & "2.2.2.2" but now he is making vpn connection with new public IP "3.3.3.3". This is anomaly why?
@@ -42,3 +43,17 @@ Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "vpn"
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase 6: Create an alert when an SSL VPN connection is getting denied by the fortigate.  
+Context: If VPN deny attempts are too much then it is possible that someone from internet wants to lockout your legitimate VPN user accounts. Someone has started a bruteforce attack on SSL VPN user accounts.   
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: fortinet.firewall.type : "event" and fortinet.firewall.subtype : "vpn" and rule.description : "SSL VPN deny" 
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase 7: Alert me on each failed VPN login attempt  
+Context: An SSL VPN user shouldn't have done even a single failed login attempt. So Keep a very strict eye on each failed login. After monitoring it some days then you can make a threshold rule like if failed login attempts increase by 5 then trigger an alert   
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: fortinet.firewall.type : "event" and fortinet.firewall.subtype : "vpn" and rule.description : "SSL VPN login fail"
+
