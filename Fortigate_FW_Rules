@@ -84,8 +84,18 @@ Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "syst
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Usercase 10:   
+Usercase 10: Create an alert when a user attempt more than 10 failed login attempts in last 24 hours   
+Context: A fortigate user can normaly attempt 5 to 7 typo mistakes in username or password but if you see more 100 failed login attempts then that must trigger an alert.   
+
+Elasticsearch Rule Type: Threshold
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "system" and rule.description : "Admin login failed"
+Threshold field: source.user.name >= 10
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase 11: Create an alert    
 Context: 
 
-Elasticsearch Rule Type: Custom Query
-Rule Query: 
+Elasticsearch Rule Type: Threshold
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "system" and rule.description : "Admin login failed"
+Threshold field: source.user.name >= 10
