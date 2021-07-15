@@ -57,3 +57,35 @@ Context: An SSL VPN user shouldn't have done even a single failed login attempt.
 Elasticsearch Rule Type: Custom Query
 Rule Query: fortinet.firewall.type : "event" and fortinet.firewall.subtype : "vpn" and rule.description : "SSL VPN login fail"
 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase 8: Create an alert when an illegitimate/unauthorized user attempts successful login in fortigate firewall  
+Context: Create a list of all users who had attempted successful login in last 90 days of logs. For example "A", "B", "C", "D", "E" are fortigate admins, only these user are authorized to login to the firewall. Write a rule when someone attempts successful login in fortigate firewall but the username doesn't match with these authorized user names.    
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "system" and rule.description : "Admin login successful" and not source.user.name: ("A" or "B" or "C" or "D" or "E")
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase 9: Create an alert when a legitimate/authorized user attempts successful login using illegitimate/unauthorized IP.
+Context: Create a list of IP address from which any fortigate user make successful login in last 90 days of logs. 
+For example: 
+- "A" user was found making successful login in firewall using IP address "1.1.1.1"
+- "B" user was found making successful login in firewall using IP address "2.2.2.2" 
+- "C" user was found making successful login in firewall using IP address "3.3.3.3"
+- "D" user was found making successful login in firewall using IP address "4.4.4.4"
+- "E" user was found making successful login in firewall using IP address "5.5.5.5"
+
+So, these IP address will be considered as authorized/legitimate IP address for users A, B, C, D and E.  
+Write a rule when an authorized user attempts successful login using unauthorized/illegitimate IP.    
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: fortinet.firewall.type: "event" and fortinet.firewall.subtype: "system" and rule.description : "Admin login successful" and ((source.user.name: "A" and not source.ip: "1.1.1.1") or (source.user.name: "B" and not source.ip: "2.2.2.2") or (source.user.name: "C" and not source.ip: "3.3.3.3") or (source.user.name: "D" and not source.ip: "4.4.4.4") or (source.user.name: "E" and not source.ip: "5.5.5.5"))
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Usercase 10:   
+Context: 
+
+Elasticsearch Rule Type: Custom Query
+Rule Query: 
